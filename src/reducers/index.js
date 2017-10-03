@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
+import ContactsReducer from './ContactsReducer';
 
-const test = (state, action) => {
-	return null
-}
 
 export default combineReducers({
-	test
+	contacts:ContactsReducer 
 });

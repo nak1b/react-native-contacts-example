@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 
-import Contacts from 'react-native-contacts';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+
+import { fetchContacts } from '../actions/ContactsActions';
 
 
 class ContactsList extends Component {
+
+	componentWillReceiveProps(nextProp) {
+		if(nextProp.error) {
+		  Alert.alert('Oops!', 'Something went wrong fetching your contacts data. Please try again!');
+		}
+	}
+
 	componentWillMount() {
+
+		this.props.fetchContacts();
+
 		
 	}
 
@@ -27,4 +40,19 @@ const styles = StyleSheet.create({
 });
 
 
-export default ContactsList;
+const mapStateToProps = (state) => {
+	const { allContacts, error } = state.contacts;
+
+  return {
+  	allContacts,
+  	error
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+  	fetchContacts
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);
