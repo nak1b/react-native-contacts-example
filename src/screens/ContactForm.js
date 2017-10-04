@@ -25,7 +25,7 @@ const ContactForm = ({isVisible, onClose}) => {
 			    onChangeText={() => console.log('a')}
 			    placeholder='Name'
 			    autoFocus={true}
-			    autoCapitalize={true}
+			    autoCapitalize='words'
 			  />
 
 				<NMInput

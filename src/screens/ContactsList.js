@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 
 import ContactForm from './ContactForm';
 import { NMContactItem, NMSpinner, NMTouchableIcon } from '../components/';
-import { fetchContacts, contactSelected, toggleContactForm } from '../actions/ContactsActions';
-
+import { fetchContacts, contactSelected } from '../actions/ContactsActions';
+import { toggleContactForm } from '../actions/ContactFormActions';
 
 class ContactsList extends Component {
 	constructor() {
@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => {
-	const { loading, allContacts, error, showForm } = state.contacts;
+	const { loading, allContacts, error } = state.contacts;
+	const { showForm } = state.contactForm;
 
   return {
   	loading,
