@@ -1,7 +1,9 @@
 import NMContactItem from './NMContactItem';
+import NMSpinner from './NMSpinner';
 
 const Elements = {
-	NMContactItem
+	NMContactItem,
+	NMSpinner
 };
 
 module.exports = Elements;

@@ -31,8 +31,8 @@ const NMContactItem = ({contact, onChange}) => {
 
 
 NMContactItem.propTypes = {
-  contact: PropTypes.object,
-  onChange: PropTypes.func
+  contact: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 	item: {
 		flex: 1,
 		flexDirection: 'row',
-		height: 90,
+		height: 80,
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		paddingLeft: 16,

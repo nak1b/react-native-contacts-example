@@ -4,7 +4,7 @@ import { View, ListView, StyleSheet, Text, Alert } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
-import { NMContactItem } from '../components/';
+import { NMContactItem, NMSpinner } from '../components/';
 import { fetchContacts, contactSelected } from '../actions/ContactsActions';
 
 
@@ -54,6 +54,20 @@ class ContactsList extends Component {
 		);
 	}
 
+	renderContactList() {
+		const { loading } = this.props;
+		
+		if(loading) return <NMSpinner/>
+
+		return (
+			<ListView
+				enableEmptySections
+				dataSource={this.dataSource}
+				renderRow={(data) => this.renderContact(data)}
+			/>
+		);
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -61,11 +75,8 @@ class ContactsList extends Component {
 					<Text style={styles.headerText}>Contacts List</Text>
 				</View>
 
-				<ListView
-					enableEmptySections
-					dataSource={this.dataSource}
-					renderRow={(data) => this.renderContact(data)}
-				/>
+				{this.renderContactList()}
+				
 			</View>
 		)
 	}
@@ -97,9 +108,10 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => {
-	const { allContacts, error } = state.contacts;
+	const { loading, allContacts, error } = state.contacts;
 
   return {
+  	loading,
   	allContacts,
   	error
   };
