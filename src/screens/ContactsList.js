@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet, Text, Alert } from 'react-native';
+import { View, ListView, StyleSheet, Text, Alert } from 'react-native';
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
@@ -9,42 +9,54 @@ import { fetchContacts } from '../actions/ContactsActions';
 
 
 class ContactsList extends Component {
+	constructor() {
+    super();
+
+    this.dataSource = [];
+  }
 
 	componentWillReceiveProps(nextProp) {
 		if(nextProp.error) {
 		  Alert.alert('Oops!', 'Something went wrong fetching your contacts data. Please try again!');
 		}
+
+		//setup up contacts datasource
+		this.createDataSource(nextProp);
 	}
 
 	componentWillMount() {
 		this.props.fetchContacts();
 
+		//setup up contacts datasource
+    this.createDataSource(this.props);
 	}
 
-	renderContacts() {
-		const { allContacts } = this.props;
+	createDataSource({allContacts}) {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.dataSource = ds.cloneWithRows(allContacts);
+  }
 
-		return allContacts.map(contact => {
-			return (
-				<NMContactItem
-					contact={contact}
-					key={contact.recordID}
-				/>
-			)
-		});
+	renderContact(contact) {
+		return (
+			<NMContactItem
+				contact={contact}
+			/>
+		);
 	}
 
 	render() {
 		return (
-			<ScrollView style={styles.container}>
+			<View style={styles.container}>
 				<View style={styles.header}>
 					<Text style={styles.headerText}>Contacts List</Text>
 				</View>
-				
-				<View style={styles.contactsWrapper}>
-					{this.renderContacts()}
-				</View>
-			</ScrollView>
+
+				<ListView
+					enableEmptySections
+					dataSource={this.dataSource}
+					renderRow={(data) => this.renderContact(data)}
+				/>
+			</View>
 		)
 	}
 }
