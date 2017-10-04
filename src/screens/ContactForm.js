@@ -6,7 +6,7 @@ import Images from '@assets/images';
 import { NMTouchableIcon, NMInput, NMButton } from '../components/';
 
 
-const ContactForm = ({isVisible, onClose}) => {
+const ContactForm = ({isVisible, onClose, onSave, nameValue, phoneValue, nameChanged, phoneChanged}) => {
 	return (
 		<Modal
 		  animationType="slide"
@@ -21,23 +21,23 @@ const ContactForm = ({isVisible, onClose}) => {
 			  />
 
 			  <NMInput
-			    value={''}
-			    onChangeText={() => console.log('a')}
+			    value={nameValue}
+			    onChangeText={nameChanged}
 			    placeholder='Name'
 			    autoFocus={true}
 			    autoCapitalize='words'
 			  />
 
 				<NMInput
-				  value={''}
-				  onChangeText={() => console.log('a')}
+				  value={phoneValue}
+				  onChangeText={phoneChanged}
 				  placeholder='Phone'
 				  returnKeyType={'done'}
 				  keyboardType='phone-pad'
 				/>
 
         <NMButton
-        	onPress={() => console.log('add contact')}
+        	onPress={onSave}
         	title="ADD CONTACT"
         />
 			</View>
@@ -48,6 +48,7 @@ const ContactForm = ({isVisible, onClose}) => {
 ContactForm.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired
 };
 
 

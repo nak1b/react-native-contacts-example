@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import ContactForm from './ContactForm';
 import { NMContactItem, NMSpinner, NMTouchableIcon } from '../components/';
 import { fetchContacts, contactSelected } from '../actions/ContactsActions';
-import { toggleContactForm } from '../actions/ContactFormActions';
+import { toggleContactForm, nameChanged, phoneChanged, saveContact } from '../actions/ContactFormActions';
 
 class ContactsList extends Component {
 	constructor() {
@@ -50,14 +50,36 @@ class ContactsList extends Component {
   	const { showForm, toggleContactForm } = this.props;
   	toggleContactForm(!showForm);
   }
+
+  saveContact() {
+  	const { formName, formPhone } = this.props;
+  	const contact = {
+  		givenName: formName,
+  		phoneNumbers: [{
+		    label: "mobile",
+		    number: formPhone,
+		  }]
+  	};
+
+  	if(!formName || !formPhone) {
+  		return Alert.alert('Oops!', 'Seems like you have not entered all the required data. Please try again!');
+  	}
+
+  	this.props.saveContact(contact);
+  }
  
   renderAddContactForm() {
-  	const { showForm } = this.props;
+  	const { showForm, formName, formPhone, nameChanged, phoneChanged } = this.props;
 
   	return (
   		<ContactForm 
   			isVisible={showForm}
   			onClose={() => this.toggleForm()}
+  			nameValue={formName}
+  			phoneValue={formPhone}
+  			nameChanged={nameChanged}
+  			phoneChanged={phoneChanged}
+  			onSave={() => this.saveContact()}
   		/>
     );
   }
@@ -143,13 +165,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
 	const { loading, allContacts, error } = state.contacts;
-	const { showForm } = state.contactForm;
+	const { showForm, name, phone } = state.contactForm;
 
   return {
   	loading,
   	allContacts,
   	error,
-  	showForm
+  	showForm,
+  	formName: name,
+  	formPhone: phone
   };
 };
 
@@ -157,7 +181,10 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
   	fetchContacts,
   	contactSelected,
-  	toggleContactForm
+  	toggleContactForm,
+  	nameChanged,
+  	phoneChanged,
+  	saveContact
   }, dispatch);
 };
 
