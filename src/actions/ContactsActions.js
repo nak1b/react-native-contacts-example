@@ -6,7 +6,7 @@ import Contacts from 'react-native-contacts';
 export const ATTEMPTING_FETCH_CONTACT = 'attemptingFetchContacts';
 export const CONTACTS_FETCH_SUCCESS = 'contactsFetchSuccess';
 export const CONTACTS_FETCH_FAIL = 'contactsFetchFail';
-
+export const CONTACT_SELECTED = 'contactSelected';
 
 /*
 	Contacts Actions
@@ -26,6 +26,14 @@ export const fetchContacts = () => {
 	}
 }
 
+export const contactSelected = (id) => {
+	return dispatch => {
+		dispatch({
+			type: CONTACT_SELECTED,
+			payload: id
+		});
+	};
+}
 
 /*
 	HELPERS

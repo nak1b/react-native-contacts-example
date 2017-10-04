@@ -1,7 +1,10 @@
+import _ from 'lodash';
+
 import { 
   ATTEMPTING_FETCH_CONTACT,
   CONTACTS_FETCH_SUCCESS,
-  CONTACTS_FETCH_FAIL 
+  CONTACTS_FETCH_FAIL,
+  CONTACT_SELECTED 
 } from '../actions/ContactsActions';
 
 
@@ -33,6 +36,21 @@ export default (state=INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: action.payload
+      }
+
+    case CONTACT_SELECTED:
+      const { id, selected } = action.payload;
+
+      const contacts = _.map(state.allContacts, contact => {
+        if(contact.recordID === id) {
+          return {...contact, isSelected: selected};
+        }
+        return contact;
+      })
+
+      return {
+        ...state,
+        allContacts: contacts
       }
 
     default:

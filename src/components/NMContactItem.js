@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import CheckBox from 'react-native-checkbox';
+import PropTypes from 'prop-types';
 
-const NMContactItem = ({contact}) => {
-	const { givenName, familyName, phoneNumbers } = contact;
+const NMContactItem = ({contact, onChange}) => {
+	const { givenName, familyName, phoneNumbers, isSelected } = contact;
 	const fullname = `${givenName} ${familyName}`;
 	let number = 'Number Not Found';
 
@@ -10,26 +12,39 @@ const NMContactItem = ({contact}) => {
 		number = phoneNumbers[0].number;
 	}
 
+	const selectedBg = isSelected ? {backgroundColor: '#f3f3f3'} : null;
+	
 	return (
-		<View style={styles.item}>
-			<Text style={styles.name}>{fullname}</Text>
-			<Text style={styles.phone}>{number}</Text>
+		<View style={[styles.item, selectedBg]}>
+			<View>
+				<Text style={styles.name}>{fullname}</Text>
+				<Text style={styles.phone}>{number}</Text>
+			</View>
+			<CheckBox
+			  label=''
+			  checked={isSelected}
+			  onChange={onChange}
+			/>
 		</View>
 	);
 }
 
 
 NMContactItem.propTypes = {
-  contact: React.PropTypes.object,
+  contact: PropTypes.object,
+  onChange: PropTypes.func
 };
 
 
 const styles = StyleSheet.create({
 	item: {
 		flex: 1,
+		flexDirection: 'row',
 		height: 90,
-		justifyContent: 'center',
-		paddingLeft: 16
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		paddingLeft: 16,
+		paddingRight: 16
 	},
 
 	name: {

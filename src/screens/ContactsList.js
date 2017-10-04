@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
 import { NMContactItem } from '../components/';
-import { fetchContacts } from '../actions/ContactsActions';
+import { fetchContacts, contactSelected } from '../actions/ContactsActions';
 
 
 class ContactsList extends Component {
@@ -36,10 +36,20 @@ class ContactsList extends Component {
     this.dataSource = ds.cloneWithRows(allContacts);
   }
 
+  onContactCheck(contact) {
+  	const { recordID, isSelected } = contact;
+  	const data = {
+  		id: recordID,
+  		selected: !isSelected
+  	};
+  	this.props.contactSelected(data);
+  }
+
 	renderContact(contact) {
 		return (
 			<NMContactItem
 				contact={contact}
+				onChange={() => this.onContactCheck(contact)}
 			/>
 		);
 	}
@@ -68,14 +78,16 @@ const styles = StyleSheet.create({
 	},
 
 	header: {
-		height: 74,
-		backgroundColor: '#e3e3e3',
+		height: 70,
+		backgroundColor: '#5fb7e4',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 
 	headerText: {
-		fontSize: 20
+		fontSize: 20,
+		color: '#fff',
+		fontWeight: '500'
 	},
 
 	contactsWrapper: {
@@ -95,7 +107,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-  	fetchContacts
+  	fetchContacts,
+  	contactSelected
   }, dispatch);
 };
 
