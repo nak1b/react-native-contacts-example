@@ -4,14 +4,16 @@ import {
   ATTEMPTING_FETCH_CONTACT,
   CONTACTS_FETCH_SUCCESS,
   CONTACTS_FETCH_FAIL,
-  CONTACT_SELECTED 
+  CONTACT_SELECTED,
+  TOGGLE_CONTACT_FORM
 } from '../actions/ContactsActions';
 
 
 const INITIAL_STATE = {
   loading: true,
   error: '',
-  allContacts: []
+  allContacts: [],
+  showForm: false
 };
 
 
@@ -51,6 +53,12 @@ export default (state=INITIAL_STATE, action) => {
       return {
         ...state,
         allContacts: contacts
+      }
+
+    case TOGGLE_CONTACT_FORM: 
+      return {
+        ...state,
+        showForm: action.payload
       }
 
     default:

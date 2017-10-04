@@ -4,8 +4,9 @@ import { View, ListView, StyleSheet, Text, Alert, TouchableOpacity } from 'react
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
-import { NMContactItem, NMSpinner } from '../components/';
-import { fetchContacts, contactSelected } from '../actions/ContactsActions';
+import ContactForm from './ContactForm';
+import { NMContactItem, NMSpinner, NMTouchableIcon } from '../components/';
+import { fetchContacts, contactSelected, toggleContactForm } from '../actions/ContactsActions';
 
 
 class ContactsList extends Component {
@@ -45,8 +46,20 @@ class ContactsList extends Component {
   	this.props.contactSelected(data);
   }
 
-  addContact() {
+  toggleForm() {
+  	const { showForm, toggleContactForm } = this.props;
+  	toggleContactForm(!showForm);
+  }
+ 
+  renderAddContactForm() {
+  	const { showForm } = this.props;
 
+  	return (
+  		<ContactForm 
+  			isVisible={showForm}
+  			onClose={() => this.toggleForm()}
+  		/>
+    );
   }
 
 	renderContact(contact) {
@@ -78,13 +91,13 @@ class ContactsList extends Component {
 				<View style={styles.header}>
 					<View style={styles.leftView} />
 					<Text style={styles.headerText}>Contacts List</Text>
-					<TouchableOpacity onPress={() => this.addContact()}>
+					<TouchableOpacity onPress={() => this.toggleForm()}>
 						<Text style={styles.rightBtn}>ADD</Text>
 					</TouchableOpacity>
 				</View>
 
 				{this.renderContactList()}
-				
+				{this.renderAddContactForm()}
 			</View>
 		)
 	}
@@ -129,19 +142,21 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => {
-	const { loading, allContacts, error } = state.contacts;
+	const { loading, allContacts, error, showForm } = state.contacts;
 
   return {
   	loading,
   	allContacts,
-  	error
+  	error,
+  	showForm
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
   	fetchContacts,
-  	contactSelected
+  	contactSelected,
+  	toggleContactForm
   }, dispatch);
 };
 

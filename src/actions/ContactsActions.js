@@ -7,6 +7,7 @@ export const ATTEMPTING_FETCH_CONTACT = 'attemptingFetchContacts';
 export const CONTACTS_FETCH_SUCCESS = 'contactsFetchSuccess';
 export const CONTACTS_FETCH_FAIL = 'contactsFetchFail';
 export const CONTACT_SELECTED = 'contactSelected';
+export const TOGGLE_CONTACT_FORM = 'toggleContactForm';
 
 /*
 	Contacts Actions
@@ -31,6 +32,15 @@ export const contactSelected = (id) => {
 		dispatch({
 			type: CONTACT_SELECTED,
 			payload: id
+		});
+	};
+}
+
+export const toggleContactForm = (isVisible) => {
+	return dispatch => {
+		dispatch({
+			type: TOGGLE_CONTACT_FORM,
+			payload: isVisible
 		});
 	};
 }
