@@ -1,11 +1,7 @@
 import React from 'react';
-import { TextInput, View, StyleSheet, Dimensions } from 'react-native';
-
-
-const { width } = Dimensions.get('window');
+import { TextInput, View, StyleSheet } from 'react-native';
 
 const NMInput = ({containerStyle, autoFocus, placeholder, value, onChangeText, autoCapitalize, keyboardType, returnKeyType }) => {
-
   return (
     <View style={[styles.container, containerStyle && containerStyle]}>
       <TextInput

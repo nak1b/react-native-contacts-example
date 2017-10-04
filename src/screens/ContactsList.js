@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 
 import ContactForm from './ContactForm';
-import { NMContactItem, NMSpinner, NMTouchableIcon } from '../components/';
+import { NMContactItem, NMSpinner, NMTouchableIcon, NMEmptyView } from '../components/';
 import { fetchContacts, contactSelected } from '../actions/ContactsActions';
 import { toggleContactForm, nameChanged, phoneChanged, saveContact } from '../actions/ContactFormActions';
 
@@ -94,9 +94,13 @@ class ContactsList extends Component {
 	}
 
 	renderContactList() {
-		const { loading } = this.props;
+		const { loading, allContacts } = this.props;
 
 		if(loading) return <NMSpinner/>
+
+		if(!allContacts || allContacts.length === 0) {
+			return <NMEmptyView label='No Contacts' />
+		}
 
 		return (
 			<ListView
