@@ -16,7 +16,7 @@ const NMContactItem = ({contact, onChange}) => {
 	
 	return (
 		<View style={[styles.item, selectedBg]}>
-			<View>
+			<View style={{flex: 1}}>
 				<Text style={styles.name}>{fullname}</Text>
 				<Text style={styles.phone}>{number}</Text>
 			</View>

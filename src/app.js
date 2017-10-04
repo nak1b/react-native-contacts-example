@@ -7,7 +7,7 @@ import logger from 'redux-logger';
 import reducers from './reducers/';
 import ContactsList from './screens/ContactsList';
 
-const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
 
