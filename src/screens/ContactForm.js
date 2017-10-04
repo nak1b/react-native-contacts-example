@@ -3,7 +3,7 @@ import { View, Modal, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Images from '@assets/images';
-import { NMTouchableIcon } from '../components/';
+import { NMTouchableIcon, NMInput, NMButton } from '../components/';
 
 
 const ContactForm = ({isVisible, onClose}) => {
@@ -13,12 +13,33 @@ const ContactForm = ({isVisible, onClose}) => {
 		  transparent={false}
 		  visible={isVisible}
 		>
-			<View style={{flex: 1}}>
+			<View style={{flex: 1, paddingTop: 75}}>
 			  <NMTouchableIcon 
 			  	icon={Images.greyClose} 
 			  	onPress={onClose}
 			  	style={styles.close}
 			  />
+
+			  <NMInput
+			    value={''}
+			    onChangeText={() => console.log('a')}
+			    placeholder='Name'
+			    autoFocus={true}
+			    autoCapitalize={true}
+			  />
+
+				<NMInput
+				  value={''}
+				  onChangeText={() => console.log('a')}
+				  placeholder='Phone'
+				  returnKeyType={'done'}
+				  keyboardType='phone-pad'
+				/>
+
+        <NMButton
+        	onPress={() => console.log('add contact')}
+        	title="ADD CONTACT"
+        />
 			</View>
 		</Modal>
 	);
@@ -33,7 +54,7 @@ ContactForm.propTypes = {
 const styles = StyleSheet.create({
 	close: {
 		position: 'absolute', 
-		top: 24, 
+		top: 30, 
 		right: 16
 	}
 })

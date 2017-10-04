@@ -23,8 +23,8 @@ NMTouchableIcon.propTypes = {
 
 const styles = StyleSheet.create({
   button: {
-    width: 30,
-    height: 30,
+    width: 26,
+    height: 26,
     padding: 4
   },
 
